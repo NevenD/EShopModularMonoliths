@@ -17,7 +17,7 @@
         // Clears all domain events from the aggregate and returns them as an array.
         public IDomainEvent[] ClearDomainEvents()
         {
-            IDomainEvent[] dequedEvents = _domainEvents.ToArray();
+            IDomainEvent[] dequedEvents = [.. _domainEvents];
             _domainEvents.Clear();
 
             return dequedEvents;
