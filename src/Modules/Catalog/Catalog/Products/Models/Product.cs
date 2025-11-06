@@ -30,7 +30,7 @@ namespace Catalog.Products.Models
                 Price = price
             };
 
-            product.AdDomainEvent(new ProductCreatedEvent(product));
+            product.AddDomainEvent(new ProductCreatedEvent(product));
 
             return product;
         }
@@ -49,7 +49,7 @@ namespace Catalog.Products.Models
             if (Price != price)
             {
                 Price = price;
-                AdDomainEvent(new ProductPriceChangedEvent(this));
+                AddDomainEvent(new ProductPriceChangedEvent(this));
             }
 
         }
