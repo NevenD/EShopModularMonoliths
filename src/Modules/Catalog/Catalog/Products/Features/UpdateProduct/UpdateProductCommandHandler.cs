@@ -25,7 +25,7 @@ namespace Catalog.Products.Features.UpdateProduct
 
             // FindAsync is a better approach since it is optimized. This method is optimzed to look up a single entity
             // You cannot call related data, then we need FirstOrDefault
-            var product = await _catalogDbContext.Products.FindAsync(request.Product.Id, cancellationToken);
+            var product = await _catalogDbContext.Products.FindAsync([request.Product.Id, cancellationToken], cancellationToken: cancellationToken);
 
             if (product is null)
             {
@@ -40,7 +40,7 @@ namespace Catalog.Products.Features.UpdateProduct
             return new UpdateProductResult(true);
         }
 
-        private void UpdateProductWithNewValues(Product product, ProductDto dto)
+        private static void UpdateProductWithNewValues(Product product, ProductDto dto)
         {
             product.Update(dto.Name, dto.Category, dto.Description, dto.ImageFile, dto.Price);
         }

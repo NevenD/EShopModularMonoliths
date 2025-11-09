@@ -20,7 +20,6 @@ namespace Catalog.Products.Features.DeleteProduct
 
         public async Task<DeleteProductResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-
             var product = await _catalogDbContext.Products.FindAsync(request.ProductId, cancellationToken);
 
             if (product is null)
@@ -29,7 +28,7 @@ namespace Catalog.Products.Features.DeleteProduct
             }
 
             _catalogDbContext.Products.Remove(product);
-            await _catalogDbContext.SaveChangesAsync();
+            await _catalogDbContext.SaveChangesAsync(cancellationToken);
 
             return new DeleteProductResult(true);
         }
