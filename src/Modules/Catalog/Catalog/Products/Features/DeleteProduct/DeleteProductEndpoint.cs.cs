@@ -13,7 +13,7 @@ namespace Catalog.Products.Features.DeleteProduct
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapDelete("/products{id}", async (Guid id, ISender sender) =>
+            app.MapDelete("/products/{id}", async (Guid id, ISender sender) =>
             {
                 var response = await sender.Send(new DeleteProductCommand(id));
 
