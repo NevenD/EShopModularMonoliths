@@ -1,9 +1,11 @@
 ﻿using Catalog.Data;
 using Catalog.Seed;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Behaviors;
 using Shared.Data;
 using Shared.Data.Interceptors;
 using Shared.Data.Seed;
@@ -26,7 +28,12 @@ namespace Catalog
             {
                 // Use reflection to register handlers from this assembly.
                 config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+
+                //typeof(ValidationBehavior<,>) refers to that open generic definition.
+                //MediatR closes it (e.g., ValidationBehavior<CreateUserCommand, UserDto>) only when the request type satisfies the constraint where TRequest : ICommand<TResponse>.
+                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
             });
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             var connectionString = configuration.GetConnectionString("Database");
 

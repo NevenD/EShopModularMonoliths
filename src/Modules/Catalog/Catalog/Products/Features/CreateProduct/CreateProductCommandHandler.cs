@@ -1,25 +1,50 @@
 ﻿using Catalog.Data;
 using Catalog.Products.Dtos;
+using FluentValidation;
+using Microsoft.Extensions.Logging;
 using Shared.CQRS;
 
 namespace Catalog.Products.Features.CreateProduct
 {
     public record CreateProductCommand(ProductDto Product) : ICommand<CreateProductResult>;
-
-
     public record CreateProductResult(Guid Id);
+
+    public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
+    {
+        public CreateProductCommandValidator()
+        {
+            RuleFor(x => x.Product.Name).NotEmpty().WithMessage("Name is required");
+            RuleFor(x => x.Product.Category).NotEmpty().WithMessage("Category is required");
+            RuleFor(x => x.Product.ImageFile).NotEmpty().WithMessage("ImageFile is required");
+            RuleFor(x => x.Product.Price).GreaterThan(0).WithMessage("Price must be greater than 0");
+        }
+    }
 
     internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         private readonly CatalogDbContext _catalogDbContext;
+        private readonly IValidator<CreateProductCommand> _validator;
+        private readonly ILogger<CreateProductCommandHandler> _logger;
 
-        public CreateProductCommandHandler(CatalogDbContext catalogDbContext)
+        public CreateProductCommandHandler(CatalogDbContext catalogDbContext, IValidator<CreateProductCommand> validator, ILogger<CreateProductCommandHandler> logger)
         {
             _catalogDbContext = catalogDbContext;
+            _validator = validator;
+            _logger = logger;
         }
 
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
+            var result = await _validator.ValidateAsync(command, cancellationToken);
+
+            var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
+            if (errors.Count is not 0)
+            {
+                throw new ValidationException(errors.FirstOrDefault());
+            }
+
+            _logger.LogInformation("CreateProductCommandHandler handle called with {@Command}", command);
+
             var product = CreateNewProduct(command.Product);
             _catalogDbContext.Products.Add(product);
             await _catalogDbContext.SaveChangesAsync(cancellationToken);
