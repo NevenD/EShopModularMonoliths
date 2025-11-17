@@ -1,5 +1,6 @@
 ﻿using Catalog.Data;
 using Catalog.Products.Dtos;
+using Catalog.Products.Exceptions;
 using Shared.CQRS;
 
 namespace Catalog.Products.Features.UpdateProduct
@@ -29,7 +30,7 @@ namespace Catalog.Products.Features.UpdateProduct
 
             if (product is null)
             {
-                throw new Exception($"Product not  found: {request.Product.Id}");
+                throw new ProductNotFoundException(request.Product.Id);
             }
 
             UpdateProductWithNewValues(product, request.Product);

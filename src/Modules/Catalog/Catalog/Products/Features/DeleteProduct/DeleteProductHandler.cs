@@ -1,4 +1,5 @@
 ﻿using Catalog.Data;
+using Catalog.Products.Exceptions;
 using Shared.CQRS;
 
 namespace Catalog.Products.Features.DeleteProduct
@@ -24,7 +25,7 @@ namespace Catalog.Products.Features.DeleteProduct
 
             if (product is null)
             {
-                throw new Exception($"Product not  found: {request.ProductId}");
+                throw new ProductNotFoundException(request.ProductId);
             }
 
             _catalogDbContext.Products.Remove(product);
