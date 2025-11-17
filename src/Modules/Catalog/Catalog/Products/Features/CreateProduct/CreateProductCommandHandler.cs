@@ -23,25 +23,16 @@ namespace Catalog.Products.Features.CreateProduct
     internal sealed class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
     {
         private readonly CatalogDbContext _catalogDbContext;
-        private readonly IValidator<CreateProductCommand> _validator;
         private readonly ILogger<CreateProductCommandHandler> _logger;
 
-        public CreateProductCommandHandler(CatalogDbContext catalogDbContext, IValidator<CreateProductCommand> validator, ILogger<CreateProductCommandHandler> logger)
+        public CreateProductCommandHandler(CatalogDbContext catalogDbContext, ILogger<CreateProductCommandHandler> logger)
         {
             _catalogDbContext = catalogDbContext;
-            _validator = validator;
             _logger = logger;
         }
 
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            var result = await _validator.ValidateAsync(command, cancellationToken);
-
-            var errors = result.Errors.Select(x => x.ErrorMessage).ToList();
-            if (errors.Count is not 0)
-            {
-                throw new ValidationException(errors.FirstOrDefault());
-            }
 
             _logger.LogInformation("CreateProductCommandHandler handle called with {@Command}", command);
 
