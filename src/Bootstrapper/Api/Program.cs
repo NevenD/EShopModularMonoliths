@@ -21,6 +21,11 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
 app.MapCarter();
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler(options =>
+{
+
+});
 
 // Configure the HTTP request pipeline
 app
@@ -28,9 +33,6 @@ app
     .UseBasketModule()
     .UseOrderingModule();
 
-app.UseExceptionHandler(options =>
-{
-});
 
 
 app.Run();

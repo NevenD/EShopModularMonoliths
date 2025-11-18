@@ -1,13 +1,27 @@
+
 services:
   eshopdb:
     container_name: eshopdb
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=EShopDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: EShopDb
     restart: always
     ports:
       - "5435:5432"
     volumes:
-    - postgres_eshopdb:/var/lib/postgresql/data
-  
+      - postgres_eshopdb:/var/lib/postgresql/data
+
+# seq password je admin
+# password nakon editiranja je admin123456!
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_ADMINPASSWORD: "admin12345!"
+    restart: always
+    ports:
+      - "5341:5341"   # ingestion
+      - "9091:80"     # UI (http://localhost:9091)
+
