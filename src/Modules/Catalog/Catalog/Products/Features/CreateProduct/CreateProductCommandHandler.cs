@@ -33,9 +33,6 @@ namespace Catalog.Products.Features.CreateProduct
 
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-
-            _logger.LogInformation("CreateProductCommandHandler handle called with {@Command}", command);
-
             var product = CreateNewProduct(command.Product);
             _catalogDbContext.Products.Add(product);
             await _catalogDbContext.SaveChangesAsync(cancellationToken);

@@ -29,9 +29,13 @@ namespace Catalog
                 // Use reflection to register handlers from this assembly.
                 config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
 
+
+
+
                 //typeof(ValidationBehavior<,>) refers to that open generic definition.
                 //MediatR closes it (e.g., ValidationBehavior<CreateUserCommand, UserDto>) only when the request type satisfies the constraint where TRequest : ICommand<TResponse>.
                 config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
             });
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
