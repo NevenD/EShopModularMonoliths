@@ -18,7 +18,7 @@ namespace Shared.Exceptions.Handler
         {
             _logger.LogError("Error Message: {exceptionMessage}, Time of occurance {time}", exception.Message, DateTime.UtcNow);
 
-            (string Detail, string Title, int StatusCode) details = exception switch
+            (string Detail, string Title, int StatusCode) = exception switch
             {
                 InternalServerException => (
                 exception.Message,
@@ -49,9 +49,9 @@ namespace Shared.Exceptions.Handler
 
             var problemDetails = new ProblemDetails
             {
-                Title = details.Title,
-                Detail = details.Detail,
-                Status = details.StatusCode,
+                Title = Title,
+                Detail = Detail,
+                Status = StatusCode,
                 Instance = context.Request.Path
             };
 

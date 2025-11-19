@@ -40,7 +40,7 @@ namespace Catalog.Products.Features.CreateProduct
             return new CreateProductResult(product.Id);
         }
 
-        private Product CreateNewProduct(ProductDto productDto)
+        private static Product CreateNewProduct(ProductDto productDto)
         {
             var product = Product.Create(
 

@@ -21,7 +21,7 @@ namespace Catalog.Products.Features.DeleteProduct
 
         public async Task<DeleteProductResult> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var product = await _catalogDbContext.Products.FindAsync(request.ProductId, cancellationToken);
+            var product = await _catalogDbContext.Products.FindAsync([request.ProductId], cancellationToken: cancellationToken);
 
             if (product is null)
             {
