@@ -72,10 +72,7 @@ namespace Catalog
         /// <returns>The same IApplicationBuilder for chaining.</returns>
         public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
         {
-            // Placeholder comments for where API, application, and infrastructure middleware would be wired.
-            // Use api services
-            // use application use case services
-            // use data service - infrastructure service
+
 
             // Apply database migrations for the CatalogDbContext to ensure the database schema is up-to-date.
             app.UseMigration<CatalogDbContext>();
