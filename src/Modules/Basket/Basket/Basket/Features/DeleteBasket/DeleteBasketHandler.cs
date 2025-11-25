@@ -28,7 +28,7 @@ namespace Basket.Basket.Features.DeleteBasket
             }
 
             _basketDbContext.ShoppingCarts.Remove(basket);
-            await _basketDbContext.SaveChangesAsync();
+            await _basketDbContext.SaveChangesAsync(cancellationToken);
 
             return new DeleteBasketResult(true);
 

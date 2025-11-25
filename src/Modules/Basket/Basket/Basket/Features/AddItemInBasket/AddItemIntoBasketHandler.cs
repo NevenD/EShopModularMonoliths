@@ -1,12 +1,12 @@
-﻿using Basket.Basket.Exceptions;
-using Basket.Basket.Modules;
+﻿using Basket.Basket.Dtos;
+using Basket.Basket.Exceptions;
 using Basket.Data;
 using Microsoft.EntityFrameworkCore;
 using Shared.CQRS;
 
 namespace Basket.Basket.Features.AddItemInBasket
 {
-    public record AddItemIntoBasketCommand(string UserName, ShoppingCartItem ShoppingCartItem) : ICommand<AddItemInBasketResult>;
+    public record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDto ShoppingCartItem) : ICommand<AddItemInBasketResult>;
     public record AddItemInBasketResult(Guid Id);
 
     public sealed class AddItemIntoBasketHandler : ICommandHandler<AddItemIntoBasketCommand, AddItemInBasketResult>
