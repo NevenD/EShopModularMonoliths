@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Behaviors;
 using Shared.Data;
 using Shared.Data.Interceptors;
 using Shared.Data.Seed;
@@ -23,20 +22,7 @@ namespace Catalog
         /// <returns>The same IServiceCollection for chaining.</returns>
         public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
         {
-            // Register MediatR and scan the current assembly for handlers, requests, and notifications.
-            services.AddMediatR(config =>
-            {
-                // Use reflection to register handlers from this assembly.
-                config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
 
-
-
-
-                //typeof(ValidationBehavior<,>) refers to that open generic definition.
-                //MediatR closes it (e.g., ValidationBehavior<CreateUserCommand, UserDto>) only when the request type satisfies the constraint where TRequest : ICommand<TResponse>.
-                config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-                config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-            });
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
             var connectionString = configuration.GetConnectionString("Database");

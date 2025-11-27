@@ -5,10 +5,15 @@ using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCarterWithAssemblies(typeof(CatalogModule).Assembly);
 
 builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(context.Configuration));
 
+
+var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(CatalogModule).Assembly;
+
+builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly);
+builder.Services.AddMediatrWithAssemblies(basketAssembly, catalogAssembly);
 
 // Add services to the container
 builder.Services
