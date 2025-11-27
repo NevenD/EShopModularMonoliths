@@ -1,5 +1,4 @@
-﻿using Basket.Basket.Features.CreateBasket;
-using Carter;
+﻿using Carter;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -14,7 +13,7 @@ namespace Basket.Basket.Features.RemoveItemFromBasket
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapDelete("/basket", async ([FromRoute] string userName, [FromRoute] Guid productId, ISender sender) =>
+            app.MapDelete("/basket/{userName}/items/{productId}", async ([FromRoute] string userName, [FromRoute] Guid productId, ISender sender) =>
             {
                 var command = new RemoveItemFromBasketCommand(userName, productId);
 
@@ -24,7 +23,7 @@ namespace Basket.Basket.Features.RemoveItemFromBasket
 
                 return Results.Ok(response);
             })
-             .Produces<CreateBasketResponse>(StatusCodes.Status200OK)
+             .Produces<RemoveItemFromBasketResponse>(StatusCodes.Status200OK)
              .ProducesProblem(StatusCodes.Status400BadRequest)
              .WithSummary("Remove item from Basket")
              .WithDescription("Remove item from Basket");

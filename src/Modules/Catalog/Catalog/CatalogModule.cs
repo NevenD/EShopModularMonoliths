@@ -1,6 +1,5 @@
 ﻿using Catalog.Data;
 using Catalog.Seed;
-using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -22,11 +21,7 @@ namespace Catalog
         /// <returns>The same IServiceCollection for chaining.</returns>
         public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
         {
-
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-
             var connectionString = configuration.GetConnectionString("Database");
-
 
             // Both are registered as scoped so they can capture scoped services (like current user, mediator, etc.).
             // The interceptors are created by the DI container

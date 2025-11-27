@@ -10,10 +10,10 @@ builder.Host.UseSerilog((context, config) => config.ReadFrom.Configuration(conte
 
 
 var catalogAssembly = typeof(CatalogModule).Assembly;
-var basketAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
 
 builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly);
-builder.Services.AddMediatrWithAssemblies(basketAssembly, catalogAssembly);
+builder.Services.AddMediatrWithAssemblies(catalogAssembly, basketAssembly);
 
 // Add services to the container
 builder.Services
