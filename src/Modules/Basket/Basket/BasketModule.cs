@@ -1,4 +1,5 @@
 ﻿using Basket.Data;
+using Basket.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -13,6 +14,10 @@ namespace Basket
     {
         public static IServiceCollection AddBasketModule(this IServiceCollection services, IConfiguration configuration)
         {
+
+
+            services.AddScoped<IBasketRepository, BasketRepository>();
+
 
             var connectionString = configuration.GetConnectionString("Database");
 
