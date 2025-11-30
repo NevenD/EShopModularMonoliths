@@ -34,7 +34,7 @@ namespace Basket.Data.Repository
             return basket;
         }
 
-        public async Task<bool> DeleteBasket(string userName, bool asNoTracking = true, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
         {
             var basket = await GetBasket(userName, false, cancellationToken);
             _basketDbContext.ShoppingCarts.Remove(basket);

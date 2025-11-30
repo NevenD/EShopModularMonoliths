@@ -1,8 +1,7 @@
 ﻿using Basket.Basket.Dtos;
 using Basket.Basket.Exceptions;
-using Basket.Data;
+using Basket.Data.Repository;
 using Mapster;
-using Microsoft.EntityFrameworkCore;
 using Shared.CQRS;
 
 namespace Basket.Basket.Features.GetBasket
@@ -12,19 +11,16 @@ namespace Basket.Basket.Features.GetBasket
 
     public sealed class GetBasketHandler : IQueryHandler<GetBasketQuery, GetBasketResult>
     {
-        private readonly BasketDbContext _basketDbContext;
+        private readonly IBasketRepository _basketRepository;
 
-        public GetBasketHandler(BasketDbContext basketDbContext)
+        public GetBasketHandler(IBasketRepository basketRepository)
         {
-            _basketDbContext = basketDbContext;
+            _basketRepository = basketRepository;
         }
 
         public async Task<GetBasketResult> Handle(GetBasketQuery request, CancellationToken cancellationToken)
         {
-            var basket = await _basketDbContext.ShoppingCarts
-                .AsNoTracking()
-                .Include(x => x.Items)
-                .SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken);
+            var basket = await _basketRepository.GetBasket(request.UserName, true, cancellationToken);
 
             if (basket is null)
             {
