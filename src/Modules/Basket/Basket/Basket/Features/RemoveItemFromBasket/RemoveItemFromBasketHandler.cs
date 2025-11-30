@@ -1,6 +1,4 @@
-﻿using Basket.Basket.Exceptions;
-using Basket.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Basket.Data.Repository;
 using Shared.CQRS;
 
 namespace Basket.Basket.Features.RemoveItemFromBasket
@@ -11,29 +9,19 @@ namespace Basket.Basket.Features.RemoveItemFromBasket
 
     public sealed class RemoveItemFromBasketHandler : ICommandHandler<RemoveItemFromBasketCommand, RemoveItemFromBasketResult>
     {
-        private readonly BasketDbContext _basketDbContext;
+        private readonly IBasketRepository _basketRepository;
 
-        public RemoveItemFromBasketHandler(BasketDbContext basketDbContext)
+        public RemoveItemFromBasketHandler(IBasketRepository basketRepository)
         {
-            _basketDbContext = basketDbContext;
+            _basketRepository = basketRepository;
         }
 
         public async Task<RemoveItemFromBasketResult> Handle(RemoveItemFromBasketCommand request, CancellationToken cancellationToken)
         {
-            var shoppingCart = await _basketDbContext.ShoppingCarts
-                    .AsNoTracking()
-                    .Include(x => x.Items)
-                    .SingleOrDefaultAsync(x => x.UserName == request.UserName, cancellationToken);
-
-
-            if (shoppingCart is null)
-            {
-                throw new BasketNotFoundException(request.UserName);
-            }
+            var shoppingCart = await _basketRepository.GetBasket(request.UserName, false, cancellationToken);
 
             shoppingCart.RemoveItem(request.ProductId);
-
-            await _basketDbContext.SaveChangesAsync(cancellationToken);
+            await _basketRepository.SaveChangesAsync(cancellationToken);
 
             return new RemoveItemFromBasketResult(shoppingCart.Id);
         }
