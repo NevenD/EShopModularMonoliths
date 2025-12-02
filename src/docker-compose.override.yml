@@ -12,6 +12,12 @@ services:
     volumes:
       - postgres_eshopdb:/var/lib/postgresql/data
 
+  distributedCache:
+    container_name: distributedCache
+    restart: always
+    ports:
+     - "6379:6379"
+
 # seq password je admin
 # password nakon editiranja je admin123456!
   seq:

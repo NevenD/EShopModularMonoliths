@@ -15,7 +15,12 @@ var basketAssembly = typeof(BasketModule).Assembly;
 builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly);
 builder.Services.AddMediatrWithAssemblies(catalogAssembly, basketAssembly);
 
-// Add services to the container
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 builder.Services
        .AddCatalogModule(builder.Configuration)
        .AddBasketModule(builder.Configuration)
