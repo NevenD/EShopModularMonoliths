@@ -21,7 +21,7 @@ namespace Basket.Basket.Features.RemoveItemFromBasket
             var shoppingCart = await _basketRepository.GetBasket(request.UserName, false, cancellationToken);
 
             shoppingCart.RemoveItem(request.ProductId);
-            await _basketRepository.SaveChangesAsync(cancellationToken);
+            await _basketRepository.SaveChangesAsync(request.UserName, cancellationToken);
 
             return new RemoveItemFromBasketResult(shoppingCart.Id);
         }

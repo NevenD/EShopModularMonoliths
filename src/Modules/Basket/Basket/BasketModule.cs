@@ -17,7 +17,16 @@ namespace Basket
 
 
             services.AddScoped<IBasketRepository, BasketRepository>();
+            services.Decorate<IBasketRepository, CachedBasketRepository>();
 
+            // this is not recomended approach since it can be messy and cumbersome
+            // it is better to use scrutor approach
+            // we can do it like this if we want to avoid indecisivnes issues on IBasketRepository
+            //services.AddScoped<IBasketRepository>(provider =>
+            //{
+            //    var basketRepository = provider.GetService<IBasketRepository>()!;
+            //    return new CachedBasketRepository(basketRepository, provider.GetRequiredService<IDistributedCache>());
+            //});
 
             var connectionString = configuration.GetConnectionString("Database");
 

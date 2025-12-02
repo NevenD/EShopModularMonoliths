@@ -27,7 +27,7 @@ namespace Basket.Basket.Features.AddItemInBasket
                 request.ShoppingCartItem.Price,
                 request.ShoppingCartItem.ProductName);
 
-            await _basketRepository.SaveChangesAsync(cancellationToken);
+            await _basketRepository.SaveChangesAsync(request.UserName, cancellationToken);
 
             return new AddItemInBasketResult(shoppingCart.Id);
         }
