@@ -29,7 +29,7 @@ namespace Basket.Data.Repository
             }
 
             var basket = await _repository.GetBasket(userName, asNoTracking, cancellationToken);
-            await _distributedCache.SetStringAsync(userName, JsonSerializer.Serialize(cachedBasket), cancellationToken);
+            await _distributedCache.SetStringAsync(userName, JsonSerializer.Serialize(basket), cancellationToken);
 
             return basket;
         }
