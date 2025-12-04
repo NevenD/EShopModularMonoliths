@@ -1,4 +1,5 @@
 ﻿using Basket.Basket.Modules;
+using Basket.Data.JsonConverters;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 
@@ -8,6 +9,13 @@ namespace Basket.Data.Repository
     {
         private readonly IBasketRepository _repository;
         private readonly IDistributedCache _distributedCache;
+
+        private readonly JsonSerializerOptions _serializerOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+            Converters = { new ShoppingCartConverter(), new ShoppingCartItemConverter() }
+        };
 
         public CachedBasketRepository(IBasketRepository repository, IDistributedCache distributedCache)
         {
@@ -25,11 +33,11 @@ namespace Basket.Data.Repository
             var cachedBasket = await _distributedCache.GetStringAsync(userName, cancellationToken);
             if (!string.IsNullOrEmpty(cachedBasket))
             {
-                return JsonSerializer.Deserialize<ShoppingCart>(cachedBasket)!;
+                return JsonSerializer.Deserialize<ShoppingCart>(cachedBasket, _serializerOptions)!;
             }
 
             var basket = await _repository.GetBasket(userName, asNoTracking, cancellationToken);
-            await _distributedCache.SetStringAsync(userName, JsonSerializer.Serialize(basket), cancellationToken);
+            await _distributedCache.SetStringAsync(userName, JsonSerializer.Serialize(basket, _serializerOptions), cancellationToken);
 
             return basket;
         }
