@@ -13,6 +13,7 @@ namespace Basket.Data.Repository
         private readonly JsonSerializerOptions _serializerOptions = new()
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            PropertyNameCaseInsensitive = true,
             DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
             Converters = { new ShoppingCartConverter(), new ShoppingCartItemConverter() }
         };
@@ -46,7 +47,7 @@ namespace Basket.Data.Repository
         {
             await _repository.CreateBasket(basket, cancellationToken);
 
-            await _distributedCache.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket), cancellationToken);
+            await _distributedCache.SetStringAsync(basket.UserName, JsonSerializer.Serialize(basket, _serializerOptions), cancellationToken);
 
             return basket;
         }

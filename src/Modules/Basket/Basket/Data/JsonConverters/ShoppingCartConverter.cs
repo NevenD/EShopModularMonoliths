@@ -17,7 +17,7 @@ namespace Basket.Data.JsonConverters
 
             var shoppingCart = ShoppingCart.Create(id, userName);
 
-            var items = itemsElement.Deserialize<List<ShoppingCart>>(options);
+            var items = itemsElement.Deserialize<List<ShoppingCartItem>>(options);
             if (items != null)
             {
                 var itemField = typeof(ShoppingCart).GetField("_items", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
@@ -34,7 +34,7 @@ namespace Basket.Data.JsonConverters
             writer.WriteString("id", value.Id.ToString());
             writer.WriteString("userName", value.UserName);
             writer.WritePropertyName("items");
-            JsonSerializer.Serialize(writer, value.Items);
+            JsonSerializer.Serialize(writer, value.Items, options);
 
             writer.WriteEndObject();
         }
