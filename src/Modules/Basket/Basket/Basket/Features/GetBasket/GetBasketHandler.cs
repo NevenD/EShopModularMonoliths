@@ -2,7 +2,7 @@
 using Basket.Basket.Exceptions;
 using Basket.Data.Repository;
 using Mapster;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
 namespace Basket.Basket.Features.GetBasket
 {

@@ -1,7 +1,7 @@
 ﻿using Catalog.Data;
 using Catalog.Products.Dtos;
 using Catalog.Products.Exceptions;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
 namespace Catalog.Products.Features.UpdateProduct
 {

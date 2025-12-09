@@ -2,7 +2,7 @@
 using Catalog.Products.Dtos;
 using Catalog.Products.Exceptions;
 using Mapster;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
 namespace Catalog.Products.Features.GetProductById
 {

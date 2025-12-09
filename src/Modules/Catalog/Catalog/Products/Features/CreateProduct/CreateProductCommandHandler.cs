@@ -2,7 +2,7 @@
 using Catalog.Products.Dtos;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
 namespace Catalog.Products.Features.CreateProduct
 {

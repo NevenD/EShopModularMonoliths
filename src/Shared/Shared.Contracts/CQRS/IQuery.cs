@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Shared.CQRS
+namespace Shared.Contracts.CQRS
 {
     /// <summary>
     /// Represents a MediatR query that returns a result of type <typeparamref name="T"/>.

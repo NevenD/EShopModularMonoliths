@@ -1,7 +1,7 @@
 ﻿using Catalog.Data;
 using Catalog.Products.Dtos;
 using Mapster;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 using Shared.Pagination;
 
 namespace Catalog.Products.Features.GetProducts
