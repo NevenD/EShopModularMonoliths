@@ -1,13 +1,12 @@
-﻿using Catalog.Data;
-using Catalog.Products.Dtos;
+﻿using Catalog.Contracts.Dtos;
+using Catalog.Contracts.Products.Features.GetProductById;
+using Catalog.Data;
 using Catalog.Products.Exceptions;
 using Mapster;
 using Shared.Contracts.CQRS;
 
 namespace Catalog.Products.Features.GetProductById
 {
-    public record GetProductByIdQuery(Guid Id) : IQuery<GetProductByIdResult>;
-    public record GetProductByIdResult(ProductDto Product);
 
     internal sealed class GetProductByIdHandler : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
     {
