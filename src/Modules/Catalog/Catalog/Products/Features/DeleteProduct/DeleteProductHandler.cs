@@ -1,8 +1,8 @@
 ﻿using Catalog.Data;
 using Catalog.Products.Exceptions;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
-namespace Catalog.Products.Features.DeleteProduct
+namespace Catalog.Contracts.Features.DeleteProduct
 {
 
     public record DeleteProductCommand(Guid ProductId) : ICommand<DeleteProductResult>;

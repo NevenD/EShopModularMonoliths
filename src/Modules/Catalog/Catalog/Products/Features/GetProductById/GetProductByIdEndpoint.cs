@@ -1,5 +1,6 @@
 ﻿using Carter;
-using Catalog.Products.Dtos;
+using Catalog.Contracts.Dtos;
+using Catalog.Contracts.Products.Features.GetProductById;
 using Catalog.Products.Features.CreateProduct;
 using Mapster;
 using MediatR;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Catalog.Products.Features.GetProductById
+namespace Catalog.Contracts.Features.GetProductById
 {
     public record GetProductByIdResponse(ProductDto Product);
     public sealed class GetProductByIdEndpoint : ICarterModule

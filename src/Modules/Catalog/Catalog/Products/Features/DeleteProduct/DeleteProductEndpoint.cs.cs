@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Catalog.Contracts.Features.DeleteProduct;
 using Catalog.Products.Features.UpdateProduct;
 using MediatR;
 using Microsoft.AspNetCore.Builder;

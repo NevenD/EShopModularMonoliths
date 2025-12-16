@@ -1,5 +1,5 @@
 ﻿using Carter;
-using Catalog.Products.Dtos;
+using Catalog.Contracts.Dtos;
 using Catalog.Products.Features.CreateProduct;
 using Mapster;
 using MediatR;

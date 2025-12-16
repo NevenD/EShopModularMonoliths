@@ -1,5 +1,5 @@
-﻿using Catalog.Data;
-using Catalog.Products.Dtos;
+﻿using Catalog.Contracts.Dtos;
+using Catalog.Data;
 using Catalog.Products.Exceptions;
 using Shared.Contracts.CQRS;
 
