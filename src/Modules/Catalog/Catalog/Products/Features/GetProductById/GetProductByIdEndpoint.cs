@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace Catalog.Contracts.Features.GetProductById
+namespace Catalog.Products.Features.GetProductById
 {
     public record GetProductByIdResponse(ProductDto Product);
     public sealed class GetProductByIdEndpoint : ICarterModule
