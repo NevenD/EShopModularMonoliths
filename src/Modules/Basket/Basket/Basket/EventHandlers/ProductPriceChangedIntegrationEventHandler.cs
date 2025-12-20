@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Basket.Basket.Features.UpdatePriceItemInBasket;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Shared.Messaging.Events;
@@ -16,13 +17,19 @@ namespace Basket.Basket.EventHandlers
         }
 
         // this method is invoked when product price changed is recieved from mass transit
-        public Task Consume(ConsumeContext<ProductPriceChangedIntegrationEvent> context)
+        public async Task Consume(ConsumeContext<ProductPriceChangedIntegrationEvent> context)
         {
             _logger.LogInformation("Integration Event handled: {IntegrationEvent}", context);
 
-            // mediatr new command and handler to find products 
+            var command = new UpdateItemPriceInBasketCommand(context.Message.ProductId, context.Message.Price);
+            var result = await _sender.Send(command);
 
-            return Task.CompletedTask;
+            if (result.IsSuccess)
+            {
+                _logger.LogError("Error updating the price: {ProductId}", context.Message.ProductId);
+            }
+
+            _logger.LogInformation("Price for product id: {ProductId} update in basket", context.Message.ProductId);
         }
     }
 }
