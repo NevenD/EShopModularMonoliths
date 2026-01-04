@@ -28,7 +28,8 @@ namespace Basket.Basket.Features.CreateBasket
              .Produces<CreateBasketResponse>(StatusCodes.Status201Created)
              .ProducesProblem(StatusCodes.Status400BadRequest)
              .WithSummary("Create Basket")
-             .WithDescription("Create Basket");
+             .WithDescription("Create Basket")
+             .RequireAuthorization();
         }
     }
 }
