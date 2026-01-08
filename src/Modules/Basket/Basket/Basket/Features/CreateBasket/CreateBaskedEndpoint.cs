@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System.Security.Claims;
 
 namespace Basket.Basket.Features.CreateBasket
 {
@@ -16,8 +17,9 @@ namespace Basket.Basket.Features.CreateBasket
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapPost("/basket", async (CreateBasketRequest request, ISender sender) =>
+            app.MapPost("/basket", async (CreateBasketRequest request, ISender sender, ClaimsPrincipal claims) =>
             {
+                var test = claims;
                 var command = request.Adapt<CreateBasketCommand>();
                 var result = await sender.Send(command);
 
