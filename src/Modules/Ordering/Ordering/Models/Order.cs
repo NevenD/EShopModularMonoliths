@@ -37,5 +37,32 @@ namespace Ordering.Models
             return order;
         }
 
+
+        public void Add(Guid productId, int quantity, decimal price)
+        {
+            var existingItem = Items.FirstOrDefault(x => x.ProductId == productId);
+
+            if (existingItem != null)
+            {
+                existingItem.Quantity += quantity;
+            }
+            else
+            {
+                var orderItem = new OrderItem(Id, productId, quantity, price);
+                _items.Add(orderItem);
+            }
+
+        }
+
+
+        public void Remove(Guid productId)
+        {
+            var orderItem = _items.FirstOrDefault(x => x.ProductId == productId);
+
+            if (orderItem is not null)
+            {
+                _items.Remove(orderItem);
+            }
+        }
     }
 }
