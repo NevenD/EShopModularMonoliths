@@ -1,6 +1,8 @@
-﻿namespace Ordering.Models
+﻿using Shared.DDD;
+
+namespace Ordering.Models
 {
-    public class OrderItem
+    public class OrderItem : Entity<Guid>
     {
         internal OrderItem(Guid orderId, Guid productId, int quantity, decimal price)
         {
