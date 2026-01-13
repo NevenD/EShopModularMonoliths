@@ -8,7 +8,7 @@ namespace Ordering.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<OrderItem> builder)
         {
-            builder.Property(o => o.Id);
+            builder.HasKey(e => e.Id);
             builder.Property(o => o.ProductId).IsRequired();
             builder.Property(o => o.Quantity).IsRequired();
             builder.Property(o => o.Price).IsRequired();

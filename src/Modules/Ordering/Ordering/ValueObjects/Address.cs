@@ -1,6 +1,6 @@
 ﻿namespace Ordering.ValueObjects
 {
-    public class Address
+    public record Address
     {
         public string FirstName { get; } = default!;
         public string LastName { get; } = default!;
