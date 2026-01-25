@@ -67,13 +67,6 @@ namespace Shared.Data
             {
                 await seed.SeedAllAsync();
             }
-
-            //foreach (var seed in seeders)
-            //{
-
-            //    await seed.SeedAsync();
-            //}
-
         }
     }
 }
